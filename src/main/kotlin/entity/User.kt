@@ -1,8 +1,5 @@
 package entity
 
-import valueObject.UserId
-import java.lang.Exception
-
 data class User(private var name: String?, private val userId: UserId) {
     fun changeName(name: String?) {
         if (name.isNullOrEmpty()) {

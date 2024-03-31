@@ -1,4 +1,5 @@
 import entity.User
+import entity.UserId
 import valueObject.FullName
 import valueObject.Main
 import valueObject.Money
@@ -12,7 +13,7 @@ fun main() {
     println(kazu == kazu2) // true
     println(Money(1000, Currency.getInstance(Locale.JAPAN)).add()) // Money(amount=2000, currency=JPY)
 
-    val kazuEntity = User("kazu")
+    val kazuEntity = User("kazu", UserId("1"))
     println(kazuEntity) // User(name=kazu)
     kazuEntity.changeName("kazutake")
     println(kazuEntity) // User(name=kazutake)
