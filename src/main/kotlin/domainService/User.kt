@@ -1,10 +1,39 @@
 package domainService
 
-data class User(private val id: String, private val name: String) {
-    fun exists(user: User): Boolean {
-        // 重複確認のふるまい
-        return true
+class Program {
+    fun createUser(userName: String) {
+        UserName(userName)
+
     }
 }
 
-val user = User("kazu", "1").exists(user = User("kazu", "2"))
+interface UserService {
+    fun exists(user: User): Boolean
+}
+
+data class User(private val name: UserName?) {
+    init {
+        if(name === null) {
+            throw Error("null or empty")
+        }
+    }
+}
+
+data class UserId(private val value: String?) {
+    init {
+        if(value.isNullOrEmpty()) {
+            throw Error("null")
+        }
+    }
+}
+
+data class UserName(private val value: String?) {
+    init {
+        if(value.isNullOrEmpty()) {
+            throw Error("null")
+        }
+        if(value.length < 3) {
+            throw Error("under length 3")
+        }
+    }
+}
