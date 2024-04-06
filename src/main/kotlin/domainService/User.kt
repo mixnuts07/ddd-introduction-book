@@ -7,8 +7,10 @@ class Program {
     }
 }
 
-interface UserService {
-    fun exists(user: User): Boolean
+class UserService {
+    fun exists(user: User): Boolean {
+        TODO()
+    }
 }
 
 data class User(private val name: UserName?) {
