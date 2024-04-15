@@ -1,5 +1,9 @@
 package applicationService
 
+class UserUpdateCommand(val id: String? = null, val name: String? = null) {
+
+}
+
 class UserApplicationService(private val userRepository: IUserRepository, private val userService: UserService) {
     fun register(name: String) {
         val user = User(UserId("111"), UserName(name))
@@ -13,12 +17,19 @@ class UserApplicationService(private val userRepository: IUserRepository, privat
         val user =  userRepository.find(targetId)
         return UserData(user!!)
     }
-    fun update(userId: String, name: String) {
-        val targetId = UserId(userId)
+    fun update(command: UserUpdateCommand) {
+        val targetId = UserId(command.id)
         val user = userRepository.find(targetId)
         if(user === null) {
             throw Error("user is null")
         }
+        val name = command.name
+        val newUserName = name?.let { UserName(it) }
+    }
+    fun delete(command: UserUpdateCommand) {
+        val targetId = UserId(command.id)
+        val user = userRepository.find(targetId)
+        user?.let { userRepository.delete(it) } ?: throw Error("not found $targetId")
     }
 }
 
@@ -32,6 +43,7 @@ interface IUserRepository {
     fun find(id: UserId): User?
     fun find(name: UserName): User
     fun save(user: User)
+    fun delete(user: User)
 }
 class UserService {
     fun exists(user: User): Boolean {
